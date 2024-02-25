@@ -48,5 +48,9 @@ Temporary Items
 # Go workspace file
 go.work
 
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
 # Temp
 notes.md
