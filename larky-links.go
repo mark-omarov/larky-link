@@ -16,6 +16,7 @@ type LarkyLinksStackProps struct {
 	StageName *string
 }
 
+// TODO: Modify retention period for CLoudWatch Logs
 func NewLarkyLinksStack(scope constructs.Construct, id string, props *LarkyLinksStackProps) awscdk.Stack {
 	var sprops awscdk.StackProps
 	if props != nil {
@@ -66,6 +67,50 @@ func NewLarkyLinksStack(scope constructs.Construct, id string, props *LarkyLinks
 		urlManagerLambda,
 		&awsapigateway.LambdaIntegrationOptions{}),
 		&awsapigateway.MethodOptions{Authorizer: authorizer})
+
+	// WAF
+	// ! FIXME: ACL Association is not working
+	// webAcl := awswafv2.NewCfnWebACL(stack, jsii.String("LarkyLinksWebACL"), &awswafv2.CfnWebACLProps{
+	// 	DefaultAction: &awswafv2.CfnWebACL_DefaultActionProperty{
+	// 		Allow: &awswafv2.CfnWebACL_AllowActionProperty{},
+	// 	},
+	// 	Scope: jsii.String("REGIONAL"),
+	// 	VisibilityConfig: &awswafv2.CfnWebACL_VisibilityConfigProperty{
+	// 		CloudWatchMetricsEnabled: jsii.Bool(true),
+	// 		MetricName:               jsii.String("LarkyLinksWebAclMetric"),
+	// 		SampledRequestsEnabled:   jsii.Bool(true),
+	// 	},
+	// 	Rules: &[]*awswafv2.CfnWebACL_RuleProperty{
+	// 		{
+	// 			Name:     jsii.String("RateLimitRule"),
+	// 			Priority: jsii.Number(1),
+	// 			Action: &awswafv2.CfnWebACL_RuleActionProperty{
+	// 				Block: &awswafv2.CfnWebACL_BlockActionProperty{},
+	// 			},
+	// 			Statement: &awswafv2.CfnWebACL_StatementProperty{
+	// 				RateBasedStatement: &awswafv2.CfnWebACL_RateBasedStatementProperty{
+	// 					AggregateKeyType: jsii.String("IP"),
+	// 					Limit:            jsii.Number(500),
+	// 				},
+	// 			},
+	// 			VisibilityConfig: &awswafv2.CfnWebACL_VisibilityConfigProperty{
+	// 				CloudWatchMetricsEnabled: jsii.Bool(true),
+	// 				MetricName:               jsii.String("RateLimitRuleMetric"),
+	// 				SampledRequestsEnabled:   jsii.Bool(true),
+	// 			},
+	// 		},
+	// 	},
+	// })
+	// resourceArn := awscdk.Fn_Sub(jsii.String("arn:aws:apigateway:${Region}::/restapis/${ApiId}/stages/${StageName}"), &map[string]*string{
+	// 	"Region":    stack.Region(),
+	// 	"ApiId":     api.RestApiId(),
+	// 	"StageName": props.StageName,
+	// })
+	// println("ResourceArn: ", *resourceArn)
+	// awswafv2.NewCfnWebACLAssociation(stack, jsii.String("WafAssociation"), &awswafv2.CfnWebACLAssociationProps{
+	// 	ResourceArn: resourceArn,
+	// 	WebAclArn:   webAcl.AttrArn(),
+	// })
 
 	return stack
 }
