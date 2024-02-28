@@ -4,6 +4,8 @@ github.com/aws/aws-cdk-go/awscdk/v2 v2.130.0 h1:89c3plfxwtxV+GaY1nMjhWOFsUrufEpy
 github.com/aws/aws-cdk-go/awscdk/v2 v2.130.0/go.mod h1:TpmJwOnoajvRtwnLlJoxEoppb9sVoCLfPGLdgoTDH7o=
 github.com/aws/aws-cdk-go/awscdklambdagoalpha/v2 v2.130.0-alpha.0 h1:4Yreqx7dF3J60zAhZPNGA6N2bTIjI7HuSgBKUawUhmo=
 github.com/aws/aws-cdk-go/awscdklambdagoalpha/v2 v2.130.0-alpha.0/go.mod h1:rhHYCFMiYWkg2tYIIT17Kk9MoVvrBfFN58UZfMMLVf0=
+github.com/aws/aws-lambda-go v1.46.0 h1:UWVnvh2h2gecOlFhHQfIPQcD8pL/f7pVCutmFl+oXU8=
+github.com/aws/aws-lambda-go v1.46.0/go.mod h1:dpMpZgvWx5vuQJfBt0zqBha60q7Dd7RfgJv23DymV8A=
 github.com/aws/constructs-go/constructs/v10 v10.3.0 h1:LsjBIMiaDX/vqrXWhzTquBJ9pPdi02/H+z1DCwg0PEM=
 github.com/aws/constructs-go/constructs/v10 v10.3.0/go.mod h1:GgzwIwoRJ2UYsr3SU+JhAl+gq5j39bEMYf8ev3J+s9s=
 github.com/aws/jsii-runtime-go v1.94.0 h1:VuVDx0xL2gbsJthUMfP+SwAXGkSEQd0GKm0ydZ8xga8=
