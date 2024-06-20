@@ -31,8 +31,8 @@ export async function GET(
   if (record?.url) {
     url = record.url;
     redis.set(data.key, url, { ex: REDIS_KEY_EX, nx: true });
-    permanentRedirect(record.url, RedirectType.replace);
+    return permanentRedirect(record.url, RedirectType.replace);
   }
 
-  permanentRedirect('/', RedirectType.replace);
+  return permanentRedirect('/', RedirectType.replace);
 }
