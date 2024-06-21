@@ -30,6 +30,7 @@ export async function POST(request: Request) {
 
   const key = await generateKey();
   await db.insert(urls).values({ key, url });
+  // TODO: Graceful handling in API endpoints and middleware
   await redis.set(key, url, { ex: redisConfig.default.ex, nx: true });
 
   return Response.json({ key, url });
