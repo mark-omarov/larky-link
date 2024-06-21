@@ -24,7 +24,7 @@ export async function GET(
     return permanentRedirect('/', RedirectType.replace);
   }
 
-  let url: string | null = await redis.get(data.key);
+  let url = await redis.get<string>(data.key);
   if (url) return permanentRedirect(url, RedirectType.replace);
 
   const [record] = await db.select().from(urls).where(eq(urls.key, data.key));
