@@ -12,6 +12,7 @@ export const urls = pgTable('urls', {
 
 export const insertURLSchema = createInsertSchema(urls, {
   key: (schema) => schema.key.min(KEY_LENGTH).regex(/[a-zA-Z0-9]/),
+  url: (schema) => schema.url.url(),
 });
 
 export type InsertURL = z.infer<typeof insertURLSchema>;
