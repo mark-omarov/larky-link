@@ -4,12 +4,10 @@ import { eq } from 'drizzle-orm';
 
 import { urls, insertURLSchema } from '@/schema';
 import { db } from '@/db';
+import { redisConfig } from '@/config';
 
 // TODO: Run local Redis server for development
 const redis = Redis.fromEnv();
-
-// TODO: Parametrize
-const REDIS_KEY_EX = 60 * 60 * 24 * 7;
 
 export async function GET(
   _request: Request,
@@ -30,7 +28,7 @@ export async function GET(
   const [record] = await db.select().from(urls).where(eq(urls.key, data.key));
   if (record?.url) {
     url = record.url;
-    redis.set(data.key, url, { ex: REDIS_KEY_EX, nx: true });
+    redis.set(data.key, url, { ex: redisConfig.default.ex, nx: true });
     return permanentRedirect(record.url, RedirectType.replace);
   }
 
