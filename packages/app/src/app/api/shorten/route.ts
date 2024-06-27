@@ -1,4 +1,6 @@
 import { eq } from 'drizzle-orm';
+import { cookies } from 'next/headers';
+import { ulid } from 'ulidx';
 
 import { db } from '@/db';
 import { createRedis } from '@/redis';
@@ -28,7 +30,19 @@ export async function POST(request: Request) {
   if (!url) return Response.json({ error: 'Invalid URL' }, { status: 400 });
 
   const key = await generateKey();
-  await db.insert(urls).values({ key, url });
+  await db.insert(urls).values({
+    key,
+    url,
+    // TODO: Duplicated, refactor
+    session:
+      cookies().get('_laky-link-ulid')?.value ??
+      request.headers
+        .get('set-cookie')
+        ?.split(';')
+        ?.find((c) => c.startsWith('_laky-link-ulid'))
+        ?.split('=')?.[1] ??
+      ulid(),
+  });
   // TODO: Graceful handling in API endpoints and middleware
   await redis.set(key, url, { EX: redisConfig.default.ex, NX: true });
 
