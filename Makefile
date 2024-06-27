@@ -1,11 +1,13 @@
+.PHONY: install
+install:
+	@pnpm install
+
 .PHONY: dev
 dev:
-	@pnpm exec next dev
+	docker compose -f docker-compose.dev.yml up --remove-orphans
 
-.PHONY: generate-migration
-generate-migration:
-	@pnpm exec dotenvx run -f ./.env.local -- pnpm exec drizzle-kit generate
+.PHONY: dev-rebuild
+dev-rebuild:
+	docker compose -f docker-compose.dev.yml build
 
-.PHONY: migrate
-migrate:
-	@pnpm exec dotenvx run -f ./.env.local -- pnpm exec drizzle-kit migrate
+	

@@ -2,6 +2,9 @@
 **/.DS_Store
 **/*.pem
 **/keys
+.vscode
+.github
+.nx
 
 # logs
 **/*.log
@@ -35,5 +38,9 @@
 docker-compose.prod.yml
 .volumes
 
-.nx/cache
-.nx/workspace-data
+# git
+.git
+.gitignore
+
+# Documentation
+*.md
