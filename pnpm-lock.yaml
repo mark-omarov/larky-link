@@ -68,9 +68,6 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.4)
-      ulid:
-        specifier: ^2.3.0
-        version: 2.3.0
       ulidx:
         specifier: ^2.3.0
         version: 2.3.0
@@ -3047,10 +3044,6 @@ packages:
   typescript@5.5.2:
     resolution: {integrity: sha512-NcRtPEOsPFFWjobJEtfihkLCZCXZt/os3zf8nTxjVH3RvTSxjrCamJpbExGvYOF+tFHc3pA65qpdwPbzjohhew==}
     engines: {node: '>=14.17'}
-    hasBin: true
-
-  ulid@2.3.0:
-    resolution: {integrity: sha512-keqHubrlpvT6G2wH0OEfSW4mquYRcbe/J8NMmveoQOjUqmo+hXtO+ORCpWhdbZ7k72UtY61BL7haGxW6enBnjw==}
     hasBin: true
 
   ulidx@2.3.0:
@@ -6246,8 +6239,6 @@ snapshots:
       possible-typed-array-names: 1.0.0
 
   typescript@5.5.2: {}
-
-  ulid@2.3.0: {}
 
   ulidx@2.3.0:
     dependencies:
