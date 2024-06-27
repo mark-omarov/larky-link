@@ -9,6 +9,7 @@ export const urls = pgTable('urls', {
   id: serial('id').primaryKey(),
   key: varchar('key', { length: KEY_LENGTH }).unique().notNull(),
   url: text('url').notNull(),
+  session: text('session'),
   createdAt: integer('createdAt')
     .notNull()
     .default(sql`extract(epoch from now())`),

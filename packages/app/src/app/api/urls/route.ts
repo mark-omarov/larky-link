@@ -1,25 +1,55 @@
-import { desc, count } from 'drizzle-orm';
+import { desc, count, eq } from 'drizzle-orm';
+import { cookies } from 'next/headers';
+import { ulid } from 'ulidx';
 
 import { db } from '@/db';
 import { urls } from '@/schema';
 
 // TODO: Handle unexpected errors
-// TODO: Session association
+// TODO: Gotta cleanup this mess, also the APIs should be available to authenticated users only via API Key
+// The cookie will be moved to the page route, it's in API route temporarily
 export async function GET(request: Request) {
+  const ulidCookieValue =
+    cookies().get('_laky-link-ulid')?.value ??
+    request.headers
+      .get('set-cookie')
+      ?.split(';')
+      ?.find((c) => c.startsWith('_laky-link-ulid'))
+      ?.split('=')?.[1] ??
+    ulid();
   const totalUrls = await db
     .select({ count: count() })
     .from(urls)
+    .where(eq(urls.session, ulidCookieValue))
     .then(([result] = []) => result.count ?? 0);
+
+  if (totalUrls <= 0) {
+    return Response.json({
+      urls: [],
+      totalUrls,
+      totalPages: 0,
+      limit: 10,
+      page: 1,
+    });
+  }
+
   const { searchParams } = new URL(request.url);
   const limit = getLimit(searchParams);
   const totalPages = Math.ceil(totalUrls / Number(limit));
   const page = getPage(searchParams, totalPages);
   const selectedUrls = await db
-    .select()
+    .select({
+      id: urls.id,
+      key: urls.key,
+      url: urls.url,
+      createdAt: urls.createdAt,
+    })
     .from(urls)
+    .where(eq(urls.session, ulidCookieValue))
     .orderBy(desc(urls.createdAt))
     .limit(limit)
     .offset((page - 1) * limit);
+
   return Response.json({
     urls: selectedUrls,
     totalUrls,
