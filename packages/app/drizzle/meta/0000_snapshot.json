@@ -34,9 +34,7 @@
         "urls_key_unique": {
           "name": "urls_key_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "key"
-          ]
+          "columns": ["key"]
         }
       }
     }
