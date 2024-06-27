@@ -1,4 +1,5 @@
-import { pgTable, serial, text, varchar } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
+import { pgTable, serial, text, varchar, integer } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
 
@@ -8,6 +9,9 @@ export const urls = pgTable('urls', {
   id: serial('id').primaryKey(),
   key: varchar('key', { length: KEY_LENGTH }).unique().notNull(),
   url: text('url').notNull(),
+  createdAt: integer('createdAt')
+    .notNull()
+    .default(sql`extract(epoch from now())`),
 });
 
 export const insertURLSchema = createInsertSchema(urls, {
