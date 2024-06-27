@@ -21,6 +21,8 @@ services:
       context: .
       dockerfile: Dockerfile
       target: app-dev
+    volumes:
+      - ./packages/app/drizzle:/usr/src/packages/app/drizzle
     entrypoint:
       ["pnpm", "--filter", "@larky-link/app", "exec", "drizzle-kit", "migrate"]
     environment:
