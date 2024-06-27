@@ -1,12 +1,10 @@
 import { eq } from 'drizzle-orm';
-import { Redis } from '@upstash/redis';
 
 import { db } from '@/db';
+import { createRedis } from '@/redis';
 import { redisConfig } from '@/config';
 import { insertURLSchema, urls } from '@/schema';
 import { generateRandomString } from '@/lib/utils';
-
-const redis = Redis.fromEnv();
 
 async function generateKey(): Promise<string> {
   const key = generateRandomString();
@@ -17,6 +15,7 @@ async function generateKey(): Promise<string> {
 
 // TODO: Response with zod errors + openapi generator (optional)
 export async function POST(request: Request) {
+  const redis = await createRedis();
   const url = await request
     .json()
     .then(
@@ -31,7 +30,7 @@ export async function POST(request: Request) {
   const key = await generateKey();
   await db.insert(urls).values({ key, url });
   // TODO: Graceful handling in API endpoints and middleware
-  await redis.set(key, url, { ex: redisConfig.default.ex, nx: true });
+  await redis.set(key, url, { EX: redisConfig.default.ex, NX: true });
 
   return Response.json({ key, url });
 }

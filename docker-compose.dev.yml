@@ -1,0 +1,78 @@
+services:
+  db:
+    image: postgres:16.3-alpine
+    container_name: larky-link-dev-postgres
+    shm_size: 128mb
+    volumes:
+      - .volumes/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: larky_link_dev
+    ports:
+      - 5432:5432
+    networks:
+      - internal
+  migrate:
+    container_name: larky-link-dev-migrate
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: app-dev
+    entrypoint:
+      ["pnpm", "--filter", "@larky-link/app", "exec", "drizzle-kit", "migrate"]
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/larky_link_dev
+    networks:
+      - internal
+  adminer:
+    image: adminer
+    container_name: larky-link-dev-adminer
+    ports:
+      - 8081:8080
+    networks:
+      - internal
+  redis:
+    image: redis:7.2.5-alpine
+    container_name: larky-link-dev-redis
+    volumes:
+      - .volumes/redis:/data
+    ports:
+      - 6379:6379
+    networks:
+      - internal
+  redisinsight:
+    image: redislabs/redisinsight:2.50
+    container_name: larky-link-dev-redisinsight
+    ports:
+      - 5540:5540
+    volumes:
+      - .volumes/redisinsight:/data
+    networks:
+      - internal
+  app:
+    container_name: larky-link-dev-app
+    depends_on:
+      - db
+      - migrate
+      - redis
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: app-dev
+    ports:
+      - 8080:8080
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/larky_link_dev
+      REDIS_URL: redis://redis:6379
+      NODE_ENV: development
+      PORT: 8080
+    volumes:
+      - ./packages/app/public:/usr/src/packages/app/public
+      - ./packages/app/src:/usr/src/packages/app/src
+    networks:
+      - internal
+networks:
+  internal:

@@ -1,0 +1,17 @@
+{
+  "name": "@larky-link/app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*"],
+    "files": ["{projectRoot}/**/*.{ts, tsx, js, jsx}"]
+  },
+  "targets": {
+    "dev": {
+      "inputs": ["default"]
+    },
+    "build": {
+      "inputs": ["default"],
+      "outputs": ["{projectRoot}/.next"]
+    }
+  }
+}

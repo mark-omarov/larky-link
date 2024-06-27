@@ -1,5 +1,4 @@
 import { defineConfig } from 'drizzle-kit';
-import { env } from '@/env.mjs';
 
 export default defineConfig({
   dialect: 'postgresql',
@@ -9,6 +8,6 @@ export default defineConfig({
     schema: 'public',
   },
   dbCredentials: {
-    url: env.DATABASE_URL,
+    url: process.env.DATABASE_URL ?? '',
   },
 });

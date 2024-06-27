@@ -8,7 +8,9 @@ export const env = createEnv({
    * Will throw if you access these variables on the client.
    */
   server: {
+    NODE_ENV: z.enum(['development', 'production']),
     DATABASE_URL: z.string().url(),
+    REDIS_URL: z.string().url(),
   },
   /*
    * Environment variables available on the client (and server).
@@ -25,7 +27,9 @@ export const env = createEnv({
    * 💡 You'll get type errors if not all variables from `server` & `client` are included here.
    */
   runtimeEnv: {
+    NODE_ENV: process.env.NODE_ENV,
     DATABASE_URL: process.env.DATABASE_URL,
+    REDIS_URL: process.env.REDIS_URL,
     // NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
     //   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
   },
