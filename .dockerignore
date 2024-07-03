@@ -5,6 +5,7 @@
 .vscode
 .github
 .nx
+.changesets
 
 # logs
 **/*.log
