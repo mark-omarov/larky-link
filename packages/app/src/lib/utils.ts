@@ -15,3 +15,21 @@ export function generateRandomString(length = 8) {
   }
   return result;
 }
+
+export function parseAndValidateNumber({
+  input = '',
+  defaultValue,
+  maxValue,
+  minValue,
+}: {
+  input: string;
+  defaultValue: number;
+  maxValue: number;
+  minValue: number;
+}): number {
+  const result = parseInt(input, 10);
+  if (isNaN(result)) return defaultValue;
+  if (result < minValue) return minValue;
+  if (result > maxValue) return maxValue;
+  return result;
+}
