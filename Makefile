@@ -1,23 +1,19 @@
-.PHONY: install
-install:
-	@pnpm install
+.PHONY: dev dev-rebuild migrate migrate-generate migrate-push
 
-.PHONY: dev
-dev:
-	@docker compose -f docker-compose.dev.yml up --remove-orphans
+up:
+	@docker compose up -d
 
-.PHONY: dev-rebuild
-dev-rebuild:
-	@docker compose -f docker-compose.dev.yml build
+down:
+	@docker compose down
 
-.PHONY: migrate
+rebuild:
+	@docker compose build
+
 migrate:
-	@DATABASE_URL=postgres://postgres:postgres@localhost:5432/larky_link_dev pnpm --filter @larky-link/app exec drizzle-kit migrate
+	@DATABASE_URL=postgres://postgres:postgres@localhost:5432/larky_link_dev pnpm -F @larky-link/app exec drizzle-kit migrate
 
-.PHONY: migrate-generate
 migrate-generate:
-	@DATABASE_URL=postgres://postgres:postgres@localhost:5432/larky_link_dev pnpm --filter @larky-link/app exec drizzle-kit generate
+	@DATABASE_URL=postgres://postgres:postgres@localhost:5432/larky_link_dev pnpm -F @larky-link/app exec drizzle-kit generate
 
-.PHONY: migrate-push
 migrate-push:
-	@DATABASE_URL=postgres://postgres:postgres@localhost:5432/larky_link_dev pnpm --filter @larky-link/app exec drizzle-kit push
+	@DATABASE_URL=postgres://postgres:postgres@localhost:5432/larky_link_dev pnpm -F @larky-link/app exec drizzle-kit push
