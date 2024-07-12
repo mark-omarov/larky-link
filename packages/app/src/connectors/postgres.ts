@@ -10,4 +10,4 @@ import { env } from '@/env.mjs';
  * @see {@link https://supabase.com/docs/guides/database/connecting-to-postgres#connecting-with-drizzle|Supabase} Docs
  */
 export const client = postgres(env.DATABASE_URL, { prepare: false });
-export const db = drizzle(client);
+export const pg = drizzle(client);

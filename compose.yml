@@ -70,6 +70,7 @@ services:
       DATABASE_URL: postgres://postgres:postgres@db:5432/larky_link_dev
       REDIS_URL: redis://redis:6379
       NODE_ENV: development
+      DOMAIN: http://localhost:8080
       PORT: 8080
     volumes:
       - ./packages/app/public:/usr/src/packages/app/public
