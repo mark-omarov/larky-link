@@ -22,10 +22,10 @@ export const URLList = ({
   return (
     <ul className="w-full max-w-sm">
       {list.map((item, idx) => (
-        <>
+        <div key={item.id}>
           {idx > 0 && <Divider />}
-          <URLListItem key={item.id} url={item.shortUrl} />
-        </>
+          <URLListItem url={item.shortUrl} />
+        </div>
       ))}
     </ul>
   );
