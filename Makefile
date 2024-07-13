@@ -1,4 +1,4 @@
-.PHONY: dev dev-rebuild migrate migrate-generate migrate-push
+.PHONY: up down build migrate migrate-generate migrate-push
 
 up:
 	@docker compose up -d
@@ -6,7 +6,7 @@ up:
 down:
 	@docker compose down
 
-rebuild:
+build:
 	@docker compose build
 
 migrate:
