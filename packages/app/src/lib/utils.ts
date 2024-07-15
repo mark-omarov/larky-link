@@ -1,10 +1,17 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+/**
+ * Merges the given class names and returns a single string.
+ */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/**
+ * Generates a random string of the specified length based on [a-zA-Z0-9] characters.
+ * @default 8 length
+ */
 export function generateRandomString(length = 8) {
   const characters =
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -16,6 +23,13 @@ export function generateRandomString(length = 8) {
   return result;
 }
 
+/**
+ * Parses and validates a number based on the given constraints.
+ * If the input is not a valid number, the default value is returned.
+ * If the input is less than the minimum value, the minimum value is returned.
+ * If the input is greater than the maximum value, the maximum value is returned.
+ * Otherwise, the input is returned as a number.
+ */
 export function parseAndValidateNumber({
   input = '',
   defaultValue,
@@ -34,6 +48,11 @@ export function parseAndValidateNumber({
   return result;
 }
 
+/**
+ * Generates an array of page numbers with ellipsis based on the current page and total pages.
+ * Delta is used to determine the range of page numbers to display around the current page.
+ * @default 2 delta
+ */
 export function getPageLinks(currentPage: number, totalPages: number) {
   const pages = [];
   const delta = 2;
@@ -59,4 +78,19 @@ export function getPageLinks(currentPage: number, totalPages: number) {
   }
 
   return pages;
+}
+
+/**
+ * Updates the current URL with new query parameters while preserving existing ones.
+ */
+export function getUrlWithUpdatedParams(
+  searchParams: string[][] | Record<string, string> | string | URLSearchParams,
+  newParams: { [key: string]: string | number },
+): URLSearchParams {
+  const params = new URLSearchParams(searchParams);
+  Object.entries(newParams).forEach(([key, value]) =>
+    params.set(key, value.toString()),
+  );
+
+  return params;
 }

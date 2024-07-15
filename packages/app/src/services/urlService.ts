@@ -4,7 +4,7 @@ import { urls, type SelectURL } from '@/schema';
 import { parseAndValidateNumber } from '@/lib/utils';
 import { paginationConfig, type PaginationConfig } from '@/config';
 
-export type URLSearchParams = { limit: string; page: string };
+export type URLServiceSearchParams = { limit: string; page: string };
 
 export type URLPaginationResult = {
   urls: Omit<SelectURL, 'session' | 'url'>[];
@@ -18,7 +18,7 @@ export async function fetchPaginatedURLs({
   searchParams,
   sessionKey,
 }: {
-  searchParams: URLSearchParams;
+  searchParams: Partial<URLServiceSearchParams>;
   sessionKey: string;
 }): Promise<URLPaginationResult> {
   const totalURLCount = await pg
@@ -37,7 +37,7 @@ export async function fetchPaginatedURLs({
     };
 
   const limit = parseAndValidateNumber({
-    input: searchParams.limit,
+    input: searchParams.limit ?? '',
     defaultValue: paginationConfig.limit.defaultValue,
     minValue: paginationConfig.limit.minValue,
     maxValue: paginationConfig.limit.maxValue,
@@ -45,7 +45,7 @@ export async function fetchPaginatedURLs({
 
   const pages = Math.ceil(totalURLCount / limit);
   const page = parseAndValidateNumber({
-    input: searchParams.page,
+    input: searchParams.page ?? '',
     defaultValue: paginationConfig.page.defaultValue,
     minValue: paginationConfig.page.minValue,
     maxValue: pages,
