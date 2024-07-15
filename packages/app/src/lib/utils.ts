@@ -33,3 +33,30 @@ export function parseAndValidateNumber({
   if (result > maxValue) return maxValue;
   return result;
 }
+
+export function getPageLinks(currentPage: number, totalPages: number) {
+  const pages = [];
+  const delta = 2;
+  const range = {
+    start: Math.max(2, currentPage - delta),
+    end: Math.min(totalPages - 1, currentPage + delta),
+  };
+
+  for (let i = range.start; i <= range.end; i++) {
+    pages.push(i);
+  }
+
+  if (range.start > 2) {
+    pages.unshift('...');
+  }
+  if (range.end < totalPages - 1) {
+    pages.push('...');
+  }
+
+  pages.unshift(1);
+  if (totalPages > 1) {
+    pages.push(totalPages);
+  }
+
+  return pages;
+}
