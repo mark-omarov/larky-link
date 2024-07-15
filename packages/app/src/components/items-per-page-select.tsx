@@ -26,8 +26,8 @@ export const ItemsPerPageSelect = ({
 
   return (
     <Select value={value} onValueChange={handleChange}>
-      <SelectTrigger className="w-[150px]">
-        <SelectValue placeholder="Items per page" />
+      <SelectTrigger className="w-[65px]">
+        <SelectValue />
       </SelectTrigger>
       <SelectContent>
         {options.map((option) => (
