@@ -15,40 +15,14 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-
-type Props = {
-  searchParams: URLSearchParams;
-};
-
-const getPageLinks = (currentPage: number, totalPages: number) => {
-  const pages = [];
-  const delta = 2;
-  const range = {
-    start: Math.max(2, currentPage - delta),
-    end: Math.min(totalPages - 1, currentPage + delta),
-  };
-
-  for (let i = range.start; i <= range.end; i++) {
-    pages.push(i);
-  }
-
-  if (range.start > 2) {
-    pages.unshift('...');
-  }
-  if (range.end < totalPages - 1) {
-    pages.push('...');
-  }
-
-  pages.unshift(1);
-  if (totalPages > 1) {
-    pages.push(totalPages);
-  }
-
-  return pages;
-};
+import { getPageLinks } from '@/lib/utils';
 
 // TODO: Separate and setup error boundary
-export default async function Home({ searchParams }: Props) {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: URLSearchParams;
+}) {
   const sessionKey = getSessionKey();
   const urlPaginationResult: URLPaginationResult | null = sessionKey
     ? await fetchPaginatedURLs({ searchParams, sessionKey })
