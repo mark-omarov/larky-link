@@ -2,15 +2,19 @@
 
 import { useState } from 'react';
 import { Copy, CopyCheck } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button, ButtonProps } from '@/components/ui/button';
 import {
   Tooltip,
   TooltipProvider,
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { cn } from '@/lib/utils';
 
-export const CopyURLButton = ({ url }: { url: string }) => {
+export const CopyURLButton = ({
+  url,
+  className,
+}: ButtonProps & { url: string }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () =>
@@ -24,7 +28,7 @@ export const CopyURLButton = ({ url }: { url: string }) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            className="w-full min-[375px]:w-auto"
+            className={cn(className, 'w-full min-[375px]:w-auto')}
             variant="outline"
             onClick={handleCopy}
           >
