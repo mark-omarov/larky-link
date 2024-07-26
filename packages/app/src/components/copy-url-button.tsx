@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, ComponentProps, ButtonHTMLAttributes } from 'react';
 import { Copy, CopyCheck } from 'lucide-react';
 import { Button, ButtonProps } from '@/components/ui/button';
 import {
@@ -9,12 +9,16 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { cn } from '@/lib/utils';
+
+type CopyUrlButtonProps = ComponentProps<'button'> &
+  ButtonHTMLAttributes<HTMLButtonElement> &
+  ButtonProps & { url: string };
 
 export const CopyURLButton = ({
   url,
   className,
-}: ButtonProps & { url: string }) => {
+  ...props
+}: CopyUrlButtonProps) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () =>
@@ -28,17 +32,18 @@ export const CopyURLButton = ({
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            className={cn(className, 'w-full min-[375px]:w-auto')}
+            className={className}
             variant="outline"
             onClick={handleCopy}
+            {...props}
           >
             {copied ? <CopyCheck size={16} /> : <Copy size={16} />}
-            <span className="ml-1 min-[375px]:hidden">
+            <span className="ml-1 sm:hidden">
               {copied ? 'Copied!' : 'Copy'}
             </span>
           </Button>
         </TooltipTrigger>
-        <TooltipContent className="hidden min-[375px]:block">
+        <TooltipContent className="hidden">
           <p>Copy</p>
         </TooltipContent>
       </Tooltip>

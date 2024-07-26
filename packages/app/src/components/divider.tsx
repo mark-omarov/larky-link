@@ -1,5 +1,6 @@
+import { ComponentProps } from 'react';
 import { cn } from '@/lib/utils';
 
-export const Divider = ({ className }: { className?: string }) => {
-  return <hr className={cn('my-4 border-t border-border', className)} />;
-};
+export const Divider = ({ className, ...props }: ComponentProps<'hr'>) => (
+  <hr className={cn('w-full border-t border-border', className)} {...props} />
+);

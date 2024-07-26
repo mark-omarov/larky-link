@@ -55,7 +55,7 @@ export function parseAndValidateNumber({
  */
 export function getPageLinks(currentPage: number, totalPages: number) {
   const pages = [];
-  const delta = 2;
+  const delta = 1;
   const range = {
     start: Math.max(2, currentPage - delta),
     end: Math.min(totalPages - 1, currentPage + delta),
