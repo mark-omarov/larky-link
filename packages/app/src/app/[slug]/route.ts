@@ -2,7 +2,7 @@ import { permanentRedirect, RedirectType } from 'next/navigation';
 import { eq } from 'drizzle-orm';
 
 import { urls, insertURLSchema } from '@/schema';
-import { pg } from '@/connectors/postgres';
+import { pg, client } from '@/connectors/postgres';
 import { createRedis } from '@/connectors/redis';
 import { redisConfig } from '@/config';
 
@@ -16,6 +16,7 @@ export async function GET(
     .safeParse({ key: params.slug });
 
   if (!success) {
+    client.end();
     console.error(error);
     return permanentRedirect('/', RedirectType.replace);
   }
@@ -24,10 +25,14 @@ export async function GET(
   if (url) return permanentRedirect(url, RedirectType.replace);
 
   const [record] = await pg.select().from(urls).where(eq(urls.key, data.key));
+  client.end();
 
   if (record?.url) {
     url = record.url;
-    redis.set(data.key, url, { EX: redisConfig.options.ex, NX: true });
+    redis.set(data.key, url, {
+      EX: redisConfig.options.ex,
+      NX: redisConfig.options.nx,
+    });
     return permanentRedirect(record.url, RedirectType.replace);
   }
 

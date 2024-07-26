@@ -1,19 +1,21 @@
 import { CopyURLButton } from '@/components/copy-url-button';
 import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 
 export const URLListItem = ({ url, ...props }: { url: string }) => {
   return (
     <li
-      className="space-y-2 p-2 min-[375px]:flex min-[375px]:items-center min-[375px]:justify-between min-[375px]:space-y-0"
+      className="mx-auto w-full max-w-sm space-y-2 p-0 sm:flex sm:space-y-0"
       {...props}
     >
       <Input
-        className="min-[375px]:rounded-none min-[375px]:rounded-l-lg min-[375px]:border-r-0"
+        aria-label={`Shortened URL: ${url}`}
+        className="sm:rounded-none sm:rounded-l-lg sm:border-r-0"
         disabled
         value={url}
       />
       <CopyURLButton
-        className="min-[375px]:border-l-1 min-[375px]:rounded-none min-[375px]:rounded-r-lg"
+        className="sm:border-l-1 w-full sm:w-fit sm:rounded-none sm:rounded-r-lg"
         url={url}
       />
     </li>
@@ -26,8 +28,12 @@ export const URLList = ({
   list: { id: number; shortUrl: string }[];
 }) => {
   return (
-    <section className="container mx-auto max-w-3xl">
-      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <section className="container p-0">
+      <ul
+        className={cn('grid grid-cols-1 gap-4', {
+          'sm:grid-cols-2': list.length > 1,
+        })}
+      >
         {list.map((item) => (
           <URLListItem key={item.id} url={item.shortUrl} />
         ))}

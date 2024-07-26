@@ -15,6 +15,11 @@ export type RedisConfig = {
      * @default 604800 (1 week)
      */
     ex: number;
+    /**
+     * NX flag
+     * @default true
+     */
+    nx: true;
   };
 };
 
@@ -22,6 +27,7 @@ export const redisConfig: RedisConfig = {
   url: env.REDIS_URL,
   options: {
     ex: 60 * 60 * 24 * 7, // 1 week
+    nx: true,
   },
 };
 

@@ -21,21 +21,26 @@ export const ItemsPerPageSelect = ({
   const handleChange = (value: string) => {
     const params = new URLSearchParams(searchParams);
     params.set('limit', value);
-    router.push(`${window.location.pathname}?${params.toString()}`);
+    router.push(`${window.location.pathname}?${params.toString()}`, {
+      scroll: false,
+    });
   };
 
   return (
-    <Select value={value} onValueChange={handleChange}>
-      <SelectTrigger className="w-[65px]">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        {options.map((option) => (
-          <SelectItem key={option} value={option}>
-            {option}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <label>
+      <span className="sr-only">Display items per page</span>
+      <Select value={value} onValueChange={handleChange}>
+        <SelectTrigger className="w-[65px]">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((option) => (
+            <SelectItem key={option} value={option}>
+              {option}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </label>
   );
 };
