@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import { Bungee } from 'next/font/google';
 import { URLList } from '@/components/url-list';
 import { env } from '@/env.mjs';
 import { getSessionKey } from '@/lib/session';
@@ -15,16 +13,13 @@ import {
   PaginationItem,
   PaginationLink,
 } from '@/components/ui/pagination';
-import { cn, getPageLinks, getUrlWithUpdatedParams } from '@/lib/utils';
+import { getPageLinks, getUrlWithUpdatedParams } from '@/lib/utils';
 import { ItemsPerPageSelect } from '@/components/items-per-page-select';
 import { ShortenForm } from '@/components/shorten-form';
 import { Divider } from '@/components/divider';
 
-export const ITEMS_PER_PAGE_OPTIONS = ['10', '20', '30', '40', '50'] as const;
+const ITEMS_PER_PAGE_OPTIONS = ['10', '20', '30', '40', '50'] as const;
 
-const bungee = Bungee({ weight: '400', subsets: ['latin'] });
-
-// TODO: Separate and setup error boundary
 export default async function Home({
   searchParams: searchParamsProp,
 }: {
@@ -44,22 +39,7 @@ export default async function Home({
   const pageLinks = getPageLinks(page, pages);
 
   return (
-    <main className="container min-h-screen max-w-3xl space-y-8 px-2 pb-2 pt-16">
-      <header className="container mx-auto pl-0 pr-0">
-        <Image
-          src="/icon.png"
-          width={50}
-          height={50}
-          alt="Picture of the author"
-          className="mx-auto"
-        />
-        <h1
-          className={cn('text-center text-3xl text-[--logo]', bungee.className)}
-        >
-          Larky Link
-        </h1>
-        <h2 className="text-center">Charting Joyful Links</h2>
-      </header>
+    <main className="space-y-4">
       <section className="container mx-auto pl-0 pr-0">
         <ShortenForm className="mx-auto" />
       </section>
