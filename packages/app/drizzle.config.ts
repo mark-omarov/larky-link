@@ -5,8 +5,9 @@ export default defineConfig({
   schema: './src/schema.ts',
   out: './drizzle',
   migrations: {
-    schema: 'public',
+    schema: 'app',
   },
+  schemaFilter: ['app'],
   dbCredentials: {
     url: process.env.DATABASE_URL ?? '',
   },

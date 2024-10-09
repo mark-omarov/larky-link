@@ -1,11 +1,13 @@
 import { sql } from 'drizzle-orm';
-import { pgTable, serial, text, varchar, integer } from 'drizzle-orm/pg-core';
+import { pgSchema, serial, text, varchar, integer } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
 
 export const KEY_LENGTH = 8 as const;
 
-export const urls = pgTable('urls', {
+export const appSchema = pgSchema('app');
+
+export const urls = appSchema.table('urls', {
   id: serial('id').primaryKey(),
   key: varchar('key', { length: KEY_LENGTH }).unique().notNull(),
   url: text('url').notNull(),
