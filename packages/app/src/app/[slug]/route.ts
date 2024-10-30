@@ -10,16 +10,18 @@ export async function GET(
   _request: Request,
   { params }: { params: { slug: string } },
 ) {
-  const redis = await createRedis();
   const { success, data, error } = insertURLSchema
     .pick({ key: true })
     .safeParse({ key: params.slug });
 
+  console.log(success, data, error);
+
   if (!success) {
-    client.end();
     console.error(error);
     return permanentRedirect('/', RedirectType.replace);
   }
+
+  const redis = await createRedis();
 
   let url = await redis.get(data.key);
   if (url) return permanentRedirect(url, RedirectType.replace);
