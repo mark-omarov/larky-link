@@ -14,8 +14,6 @@ export async function GET(
     .pick({ key: true })
     .safeParse({ key: params.slug });
 
-  console.log(success, data, error);
-
   if (!success) {
     console.error(error);
     return permanentRedirect('/', RedirectType.replace);
