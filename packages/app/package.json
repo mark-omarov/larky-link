@@ -21,7 +21,7 @@
     "drizzle-orm": "^0.31.2",
     "drizzle-zod": "^0.5.1",
     "lucide-react": "^0.395.0",
-    "next": "14.3.0-canary.86",
+    "next": "15.4.8",
     "postgres": "^3.4.4",
     "react": "rc",
     "react-dom": "rc",
